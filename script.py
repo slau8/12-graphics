@@ -32,7 +32,7 @@ def first_pass( commands ):
         args = command["args"]
         if op == "frames":
             num_frames = args[0]
-        elif op == "baename":
+        elif op == "basename":
             basename = args[0]
         elif op == "vary":
             is_anim = True
@@ -57,7 +57,7 @@ def first_pass( commands ):
   dictionary corresponding to the given knob with the
   appropirate value.
   ===================="""
-def second_pass( commands, num_frames ):
+def second_pass( commands ):
     global knobs
     global num_frames
     knobs = [{} for frames in range(int(num_frames))]
@@ -76,7 +76,7 @@ def second_pass( commands, num_frames ):
                 if i == end_frame:
                     curr = end_val
                 knobs[i][knob] = curr
-                curr += increment
+                curr += inc
 
 def run(filename):
     """
@@ -130,15 +130,14 @@ def run(filename):
 
     for frame in range(int(num_frames)):
         for knob in knobs[frame]:
-            symbols[knob][1] = knob[frame][knob]
+            symbols[knob][1] = knobs[frame][knob]
 
         for command in commands:
-            print command
             c = command['op']
             args = command['args']
             if not args == None:
                 args = command['args'][:]
-            if ("knob" in command) and (not args = None) and (not command["knob"] == None) and (c in ["move", "scale", "rotate"]):
+            if ("knob" in command) and (not args == None) and (not command["knob"] == None) and (c in ["move", "scale", "rotate"]):
                 knob = command["knob"]
                 for i in range(len(args)):
                     if not isinstance(args[i], basestring):
@@ -212,10 +211,10 @@ def run(filename):
                 save_extension(screen, args[0])
 
         if is_anim:
-            save_extension(screen, ("./anim" + basename + "%03d.png" % int(frame)))
+            save_extension(screen, ("./anim/" + basename + "%03d.png" % int(frame)))
 
         tmp = new_matrix()
-        indent(tmp)
+        ident(tmp)
         stack = [ [x[:] for x in tmp] ]
         screen = new_screen()
         zbuffer = new_zbuffer()
