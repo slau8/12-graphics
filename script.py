@@ -3,9 +3,10 @@ from display import *
 from matrix import *
 from draw import *
 
-basename = ""
-num_frames = 0
+basename = "basename"
+num_frames = None
 knobs = []
+is_anim = False
 
 """======== first_pass( commands, symbols ) ==========
 
